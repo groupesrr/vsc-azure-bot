@@ -19,18 +19,24 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
+        var items:string[] = [];
+        
+        items.push('IoT Hub Bot');
+        
+        vscode.window.showQuickPick(items).then( selected => {
+            switch (selected) {
+            case 'IoT Hub Bot':
+                html.createPreview('iot-hub-bot', "IoT Hub Bot", "code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU", 2);
+                break;                
+            }
+        });
     });
 
     context.subscriptions.push(disposable);
 
     html.setExtensionPath(context.extensionPath);
     
-    html.createPreview('iot-hub-bot', "IoT Hub Bot", 2);
-
 }
 
 // this method is called when your extension is deactivated

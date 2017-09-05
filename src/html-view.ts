@@ -88,11 +88,11 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
      * @param title 
      * @param panel 
      */
-    public createPreview(type: string, title: string, panel: number = 1) {
+    public createPreview(type: string, title: string, param: string, panel: number = 1) {
 
         this.documentStart(title, type, true);
 
-        this.write("<iframe id='chat' src=\"https://webchat.botframework.com/embed/code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU\" frameBorder=\"0\" />");
+        this.write("<iframe id='chat' src=\"https://webchat.botframework.com/embed/" + param + "\" frameBorder=\"0\" />");
 
         this.documentEnd();
 
