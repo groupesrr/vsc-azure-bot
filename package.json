@@ -2,7 +2,7 @@
   "name": "azure-bot",
   "displayName": "Azure Bot",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "Zim",
   "repository": "https://github.com/zikalino/vsc-azure-bot",
   "icon": "icon.png",
@@ -12,6 +12,17 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+            "azure",
+            "bot",
+            "iot",
+            "hub",
+            "docker",
+            "manage",
+            "explorer",
+            "cloud",
+            "container"
+        ],
   "activationEvents": [
     "onCommand:extension.sayHello"
   ],
