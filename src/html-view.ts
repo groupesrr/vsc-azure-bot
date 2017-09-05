@@ -27,11 +27,14 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
 
         var xuri = "https://webchat.botframework.com/embed/code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU";
         // TODO: detect failure to load page (e.g. google.com) and display error to user.
-        //if (!uriString.startsWith('xxx://internal')) {
-            return "<iframe src=\"" +xuri + "\" frameBorder=\"0\" width=\"1024\" height=\"1024\"/>";
-        //} else {
-        //    return this.m_InternalPages[uriString];
-        //}
+        if (!uriString.startsWith('xxx://internal')) {
+
+
+            //return "<iframe src=\"https://webchat.botframework.com/embed/code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU\" frameBorder=\"0\" width=\"1024\" height=\"1024\"/>";
+            return null;
+        } else {
+            return this.m_InternalPages[uriString];
+        }
     };
 
     /**
@@ -85,15 +88,12 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
      * @param title 
      * @param panel 
      */
-    public createPreviewFromText(type: string, text: string, title: string, panel: number = 1) {
-
-        text = text.replace(/(\r\n|\n|\r)/gm,"<br/>");
-
-//        text = text.split('\x1b').join("---");
-
+    public createPreview(type: string, title: string, panel: number = 1) {
 
         this.documentStart(title, type, true);
-        this.documentParagraph(text);
+
+        this.write("<iframe id='chat' src=\"https://webchat.botframework.com/embed/code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU\" frameBorder=\"0\" />");
+
         this.documentEnd();
 
         this.preview('xxx://internal/' + type, this.m_CurrentDocument, title, panel, false);
@@ -246,11 +246,6 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
         this.write('<style type="text/css">' + css + '</style>');
         this.write('<script>' + script + '</script>');
         this.write("<body id='xbodyx' onload='onPageLoaded();' onresize='onPageResize();' onfocusin='onDocumentGotFocus(event)' onfocusout='onDocumentLostFocus(event)'" + (scroll ? "" : " style='overflow:hidden'") + "><div id='muka'></div>");
-
-        this.write(" <frame src='skype.com/interviews'/>");
-        if (title) {
-            this.write('<h2>' + title + '</h2>');
-        }
 
         var link = encodeURI('command:extension.htmlEvent?' + JSON.stringify(['xdocumentx', 'xelementx', 'xeventx', 'xparamx'])); 
 

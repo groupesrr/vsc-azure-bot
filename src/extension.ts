@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     html.setExtensionPath(context.extensionPath);
     
-    html.createPreviewFromText('docker', "abc", "Top", 2);
+    html.createPreview('iot-hub-bot', "IoT Hub Bot", 2);
 
 }
 

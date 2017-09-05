@@ -120,24 +120,13 @@ function onPageLoaded() {
 var count = 0;
 
 function onPageResize() {
-    // get children count
-    var children = 0;
 
-    while (document.getElementById("panel_" + children)) {
-        children++;
-    }
-
-    //document.getElementById("muka").innerHTML = 'CHILDREN: ' + children;    
-
-    for (var i = 0; i < children; i++) {
-
-        var el = document.getElementById("panel_" + i);
+        var el = document.getElementById("chat");
 
         el.style.position = 'absolute';
         el.style.overflow = 'scroll';
-        el.style.left = ((window.innerWidth / children) * i).toString() + 'px';
+        el.style.left = '0px';
         el.style.top = '0px';
-        el.style.right = ((window.innerWidth / children) * (children - i - 1)).toString() + 'px';
-        el.style.bottom = '0px';
+        el.style.width = window.innerWidth + 'px';
+        el.style.height = window.innerHeight + 'px';
     }
-}
