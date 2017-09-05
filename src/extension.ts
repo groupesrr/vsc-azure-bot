@@ -3,6 +3,10 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import { HtmlView } from './html-view';
+
+var html: HtmlView = HtmlView.getInstance();
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -22,6 +26,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposable);
+
+    html.setExtensionPath(context.extensionPath);
+    
+    html.createPreviewFromText('docker', "abc", "Top", 2);
+
 }
 
 // this method is called when your extension is deactivated
