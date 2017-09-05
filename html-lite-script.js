@@ -125,8 +125,8 @@ function onPageResize() {
 
         el.style.position = 'absolute';
         el.style.overflow = 'scroll';
-        el.style.left = '0px';
-        el.style.top = '0px';
-        el.style.width = window.innerWidth + 'px';
-        el.style.height = window.innerHeight + 'px';
+        el.style.left = '20px';
+        el.style.top = '20px';
+        el.style.width = (window.innerWidth - 40) + 'px';
+        el.style.height = (window.innerHeight - 40) + 'px';
     }
