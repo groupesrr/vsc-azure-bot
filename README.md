@@ -6,11 +6,6 @@ This version provides experimental **Azure IoT Hub Bot**
 
 Press **Alt + B** to initialize, then select bot.
 
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
 
 ![feature X](screenshot.png)
 
