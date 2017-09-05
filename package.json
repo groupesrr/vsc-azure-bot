@@ -1,6 +1,6 @@
 {
-    "name": "iot-hub-bot",
-    "displayName": "IoT Hub Bot",
+    "name": "azure-bot",
+    "displayName": "Azure Bot",
     "description": "",
     "version": "0.0.1",
     "publisher": "Zim",
