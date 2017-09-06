@@ -92,7 +92,7 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
 
         this.documentStart(title, type, true);
 
-        this.write("<iframe id='chat' src=\"https://webchat.botframework.com/embed/" + param + "\" frameBorder=\"0\" />");
+        this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/index.html?" + param + "\" frameBorder=\"0\" />");
 
         this.documentEnd();
 

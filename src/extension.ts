@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showQuickPick(items).then( selected => {
             switch (selected) {
             case 'IoT Hub Bot':
-                html.createPreview('iot-hub-bot', "IoT Hub Bot", "code-helper-bot?s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU", 2);
+                html.createPreview('iot-hub-bot', "IoT Hub Bot", "s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU", 2);
                 break;                
             }
         });
