@@ -2852,10 +2852,10 @@ var Chat = (function (_super) {
         exports.konsole.log("BotChat.Chat state", state);
         // only render real stuff after we know our dimensions
         var header;
-        if (state.format.options.showHeader)
-            header =
-                React.createElement("div", { className: "wc-header" },
-                    React.createElement("span", null, state.format.strings.title));
+        //        if (state.format.options.showHeader) header =
+        //            <div className="wc-header">
+        //                <span>{ state.format.strings.title }</span>
+        //            </div>;
         var resize;
         if (this.props.resize === 'detect')
             resize =
@@ -17167,14 +17167,14 @@ var HistoryView = (function (_super) {
         this.autoscroll();
     };
     HistoryView.prototype.autoscroll = function () {
-        var vAlignBottomPadding = Math.max(0, measurePaddedHeight(this.scrollMe) - this.scrollContent.offsetHeight);
-        this.scrollContent.style.marginTop = vAlignBottomPadding + 'px';
-        var lastActivity = this.props.activities[this.props.activities.length - 1];
-        var lastActivityFromMe = lastActivity && this.props.isFromMe && this.props.isFromMe(lastActivity);
+        //const vAlignBottomPadding = Math.max(0, measurePaddedHeight(this.scrollMe) - this.scrollContent.offsetHeight);
+        //this.scrollContent.style.marginTop = vAlignBottomPadding + 'px';
+        //const lastActivity = this.props.activities[this.props.activities.length - 1];
+        //const lastActivityFromMe = lastActivity && this.props.isFromMe && this.props.isFromMe(lastActivity);
         // Validating if we are at the bottom of the list or the last activity was triggered by the user.
-        if (this.scrollToBottom || lastActivityFromMe) {
-            this.scrollMe.scrollTop = this.scrollMe.scrollHeight - this.scrollMe.offsetHeight;
-        }
+        //if (this.scrollToBottom || lastActivityFromMe) {
+        //    this.scrollMe.scrollTop = this.scrollMe.scrollHeight - this.scrollMe.offsetHeight;
+        //}
     };
     // At startup we do three render passes:
     // 1. To determine the dimensions of the chat panel (not much needs to actually render here)
@@ -17196,16 +17196,19 @@ var HistoryView = (function (_super) {
                 content = React.createElement(this.measurableCarousel, null);
             }
             else {
-                content = this.props.activities.map(function (activity, index) {
-                    return React.createElement(WrappedActivity, { format: _this.props.format, key: 'message' + index, activity: activity, showTimestamp: index === _this.props.activities.length - 1 || (index + 1 < _this.props.activities.length && suitableInterval(activity, _this.props.activities[index + 1])), selected: _this.props.isSelected(activity), fromMe: _this.props.isFromMe(activity), onClickActivity: _this.props.onClickActivity(activity), onClickRetry: function (e) {
+                // just display last activity....
+                var index = this.props.activities.length - 1;
+                var activity = this.props.activities[index];
+                content =
+                    React.createElement(WrappedActivity, { format: this.props.format, key: 'message' + index, activity: activity, showTimestamp: index === this.props.activities.length - 1 || (index + 1 < this.props.activities.length && suitableInterval(activity, this.props.activities[index + 1])), selected: this.props.isSelected(activity), fromMe: this.props.isFromMe(activity), onClickActivity: this.props.onClickActivity(activity), onClickRetry: function (e) {
                             // Since this is a click on an anchor, we need to stop it
                             // from trying to actually follow a (nonexistant) link
                             e.preventDefault();
                             e.stopPropagation();
                             _this.props.onClickRetry(activity);
                         } },
-                        React.createElement(ActivityView_1.ActivityView, { format: _this.props.format, size: _this.props.size, activity: activity, onCardAction: function (type, value) { return _this.doCardAction(type, value); }, onImageLoad: function () { return _this.autoscroll(); } }));
-                });
+                        React.createElement(ActivityView_1.ActivityView, { format: this.props.format, size: this.props.size, activity: activity, onCardAction: function (type, value) { return _this.doCardAction(type, value); }, onImageLoad: function () { return _this.autoscroll(); } }));
+                //);
             }
         }
         var groupsClassName = Chat_1.classList('wc-message-groups', !this.props.format.options.showHeader && 'no-header');
