@@ -1,0 +1,2054 @@
+﻿<!DOCTYPE html>
+<!--
+  This is a sample HTML file which shows how to embed a sidebar instance of WebChat.
+  1. Build the project: "npm run build"
+  2. Start a web server: "npm run start"
+  3. Aim your browser at "http://localhost:8000/samples?[parameters as listed below]"
+
+  For ease of testing, several parameters can be set in the query string:
+    * s = Direct Line secret, or
+    * t = Direct Line token (obtained by calling Direct Line's Generate Token)
+    * domain = optionally, the URL of an alternate Direct Line endpoint
+    * webSocket = set to 'true' to use WebSocket to receive messages (currently defaults to false)
+    * userid, username = id (and optionally name) of bot user
+    * botid, botname = id (and optionally name) of bot
+-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bot Chat</title>
+
+    <link href="botchat.css" rel="stylesheet" />
+    <link href="botchat-fullwindow.css" rel="stylesheet" />
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+      }
+    </style>
+
+    <script>
+      function toggleClassName(className) {
+        const BotChatGoesHere = document.getElementById('BotChatGoesHere');
+
+        ['wc-narrow', 'wc-normal', 'wc-wide'].forEach(function (c) {
+          BotChatGoesHere.classList.remove(c);
+        });
+
+        BotChatGoesHere.classList.add(className);
+      }
+    </script>
+  </head>
+  <body>
+
+    <div id="BotChatGoesHere"></div>
+
+    <script src="botchat.js"></script>
+
+    <script>
+      const params = BotChat.queryParams(location.search);
+
+      const user = {
+        id: params['userid'] || 'userid',
+        name: params['username'] || 'username'
+      };
+
+      const bot = {
+        id: params['botid'] || 'botid',
+        name: params['botname'] || 'botname'
+      };
+
+      window['botchatDebug'] = params['debug'] && params['debug'] === 'true';
+
+      function ca(action, param) {
+        window.alert(action + " --- " + JSON.stringify(param));
+      }
+
+      BotChat.AppSingleMsg({
+        // XXX - ActivityViewProps here
+        muka: "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+        onCardAction: ca,
+        activity: {
+          type: "message",
+          "attachments": [
+          {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+              "type": "AdaptiveCard",
+              "body": [
+                {
+                  "type": "Container",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "az",
+                      "weight": "bolder",
+                      "size": "medium"
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "string",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "account"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az account"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage subscriptions.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "acr"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az acr"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Container Registries.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "acs"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az acs"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Container Services.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "ad"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az ad"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Synchronize on-premises directories and manage Azure Active Directory",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "appservice"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az appservice"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage your App Service plans.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "batch"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az batch"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Batch.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "billing"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az billing"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Billing.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "cdn"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az cdn"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Content Delivery Networks (CDN).",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "cloud"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az cloud"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage the registered Azure clouds.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "cognitiveservices"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az cognitiveservices"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Cognitive Services accounts in Azure Resource Manager.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "component"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az component"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage and update Azure CLI 2.0 components.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "consumption"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az consumption"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Consumption.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "container"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az container"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "(Preview) Manage Azure Container Instances.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "cosmosdb"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az cosmosdb"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Cosmos DB database accounts.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "disk"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az disk"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure Managed Disks.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "dla"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az dla"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage Data Lake Analytics accounts, jobs, and catalogs.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "dls"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az dls"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage Data Lake Store accounts, and filesystems.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "feature"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az feature"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage resource provider features, such as previews.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "functionapp"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az functionapp"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage your function app.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "group"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az group"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage resource groups and template deployments.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "image"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az image"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage custom Virtual Machine Images.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "iot"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az iot"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Connect, monitor, and control millions of IoT assets.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "keyvault"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az keyvault"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Safeguard and maintain control of keys, secrets, and certificates.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "lab"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az lab"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage DevTest Labs.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "lock"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az lock"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure locks.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "managedapp"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az managedapp"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage template solutions provided and maintained by the ISV using managedapp",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "monitor"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az monitor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage Azure Monitor service.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "mysql"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az mysql"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage Azure Database for MySQL servers.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "network"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az network"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manages Azure Network resources.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "policy"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az policy"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage resource policies.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "postgres"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az postgres"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Commands to manage Azure Database for PostgreSQL servers.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "provider"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az provider"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage resource providers.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "redis"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az redis"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Access to a secure, dedicated cache for your Azure applications.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "resource"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az resource"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure resources.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "role"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az role"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Use role assignments to manage access to your Azure resources.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "sf"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az sf"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage and administer a Service Fabric cluster.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "snapshot"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az snapshot"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage point-in-time copies of managed disks, native blobs, or other",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "sql"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az sql"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage Azure SQL Databases and Data Warehouses.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "storage"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az storage"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Durable, highly available, and massively scalable cloud storage.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "tag"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az tag"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage resource tags.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "taskhelp"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az taskhelp"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Provides long-form help content by topic.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "vm"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az vm"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Provision Linux or Windows virtual machines in seconds.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "vmss"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az vmss"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Create highly available, auto-scalable Linux or Windows virtual machines.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "webapp"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az webapp"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Manage web apps.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "string",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "configure"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az configure"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Configure Azure CLI 2.0 or view your configuration. The command is",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "feedback"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az feedback"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Loving or hating the CLI?  Let us know!",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "find"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az find"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Find Azure CLI commands based on a given query.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "interactive"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az interactive"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Start the interactive experience.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "login"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az login"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Log in to access Azure subscriptions.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "separation": "none",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "size": 1,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "color": "accent",
+                          "textweight": "bolder",
+                          "text": "logout"
+                        }
+                      ],
+                      "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                          "action": "menu",
+                          "param": "az logout"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Column",
+                      "size": 2,
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "size": "medium",
+                          "horizontalAlignment": "left",
+                          "text": "Log out to remove access to Azure subscriptions.",
+                          "isSubtle": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "actions": []
+            }
+          }
+        ]
+      }
+        
+      }, document.getElementById('BotChatGoesHere'));
+    </script>
+  </body>
+</html>
