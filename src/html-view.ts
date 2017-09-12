@@ -108,14 +108,26 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
      */
     public createAdaptiveCardPreview(type: string, title: string, action: object, panel: number = 1) {
 
-        this.documentStart(title, type, true);
+        var script = fs.readFileSync(this.m_ExtensionPath + "/html/botchat.js", "utf8");
+        var css1 = fs.readFileSync(this.m_ExtensionPath + "/html/botchat.css", "utf8");
+        var css2 = fs.readFileSync(this.m_ExtensionPath + "/html/botchat-fullwindow.css", "utf8");
+        
+        var start = fs.readFileSync(this.m_ExtensionPath + "/html/single-start.html", "utf8");
+        var end = fs.readFileSync(this.m_ExtensionPath + "/html/single-end.html", "utf8");
+        
+        
 
-        // XXX - just write JSON to the FS so it can be 
-        fs.writeFile(this.m_ExtensionPath + "/html/card.js", "var ACTIVITY = " + JSON.stringify(action) + ";");
+        this.m_CurrentDocument = start + "<script>" + script + "\r\n\r\n var ACTIVITY = " + JSON.stringify(action) + "; </script>" + end;
+        
+        //this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/single.html\" frameBorder=\"0\" />");
 
-        this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/single.html\" frameBorder=\"0\" />");
 
-        this.documentEnd();
+        //var link = encodeURI('command:extension.htmlCardEvent?' + JSON.stringify(['xdocumentx', 'xelementx', 'xeventx', 'xparamx']));
+        //this.m_GlobalLinks += "<a href='" + link + "' id='event_handler_a' ></a>";
+        
+        //this.documentEnd();
+
+        fs.writeFileSync(this.m_ExtensionPath + "/html/updated.html", this.m_CurrentDocument);
 
         this.preview('xxx://internal/' + type, this.m_CurrentDocument, title, panel, false);
     }
@@ -141,9 +153,9 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
         this.write('<script>' + script + '</script>');
         this.write("<body id='xbodyx' onload='onPageLoaded();' onresize='onPageResize();' onfocusin='onDocumentGotFocus(event)' onfocusout='onDocumentLostFocus(event)'" + (scroll ? "" : " style='overflow:hidden'") + "><div id='muka'></div>");
 
-        var link = encodeURI('command:extension.htmlEvent?' + JSON.stringify(['xdocumentx', 'xelementx', 'xeventx', 'xparamx'])); 
+//        var link = encodeURI('command:extension.htmlCardEvent?' + JSON.stringify(['xdocumentx', 'xelementx', 'xeventx', 'xparamx'])); 
 
-        this.m_GlobalLinks += "<a href='" + link + "' id='event_handler_a' ></a>";
+//        this.m_GlobalLinks += "<a href='" + link + "' id='event_handler_a' ></a>";
     }
 
     /**

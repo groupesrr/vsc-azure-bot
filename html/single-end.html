@@ -1,0 +1,50 @@
+  </head>
+  <body>
+
+    <div id="BotChatGoesHere"></div>
+
+    <script>
+      
+      const params = BotChat.queryParams(location.search);
+
+      const user = {
+        id: params['userid'] || 'userid',
+        name: params['username'] || 'username'
+      };
+
+      const bot = {
+        id: params['botid'] || 'botid',
+        name: params['botname'] || 'botname'
+      };
+
+      window['botchatDebug'] = params['debug'] && params['debug'] === 'true';
+
+      var handlerHref = "";
+
+      function ca(action, param) {
+        if (handlerHref == '') {
+          handlerHref = document.getElementById("event_handler_a").getAttribute('href');
+        }
+  
+        var href = handlerHref; 
+        // document will be prepended to the file
+        //href = href.replace('xdocumentx', documentId);
+        //href = href.replace('xelementx', element);
+        //href = href.replace('xeventx', event);
+        //href = href.replace('xparamx', param);
+        document.getElementById("event_handler_a").setAttribute('href', href);
+        document.getElementById("event_handler_a").click();
+      }
+
+      BotChat.AppSingleMsg({
+        // XXX - ActivityViewProps here
+        muka: "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+        onCardAction: ca,
+        activity: ACTIVITY
+        
+      }, document.getElementById('BotChatGoesHere'));
+    </script>
+
+    <a href='command:extension.htmlCardEvent?%5B%22xdocumentx%22,%22xelementx%22,%22xeventx%22,%22xparamx%22%5D' id='event_handler_a' ></a>
+  </body>
+</html>

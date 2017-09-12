@@ -15,6 +15,17 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "iot-hub-bot" is now active!');
 
+    {
+      let disposable = vscode.commands.registerCommand('extension.htmlCardEvent', (...p:any[]) => {
+        // parameters:
+        //  1) document
+        //  2) element id
+        //  3) event type
+        //  4) event param
+        html.handleEvent(p[0], p[1], p[2], p[3]);
+      });
+    }
+
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
@@ -34,7 +45,6 @@ export function activate(context: vscode.ExtensionContext) {
                 // XXX - this must run in a different way
                 // XXX - docker shall be started here, and createPreview from inside
                 // XXX - but for now, let's just display message
-                html.createPreview('azure-cli', "Azure CLI", "", 2);
 
                 var activity =
                 
