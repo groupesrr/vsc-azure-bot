@@ -5,7 +5,10 @@ import * as vscode from 'vscode';
 
 import { HtmlView } from './html-view';
 
+import { Docker } from './docker';
+
 var html: HtmlView = HtmlView.getInstance();
+var docker: Docker = new Docker(vscode.workspace.rootPath, logHandler, closeHandler);
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -270,9 +273,18 @@ export function activate(context: vscode.ExtensionContext) {
               
                 };
 
-                html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity, 1, function(r) {
-                  vscode.window.showInformationMessage(JSON.stringify(r));
-                }) 
+                //html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity, 1, function(r) {
+                //  vscode.window.showInformationMessage(JSON.stringify(r));
+                //}) 
+
+
+                startContainerFromTerminal("dockiot/azure-bot-dev", true, function(result) {
+
+                  //docker.execCmd("azure-cli-bot", "ls -al", null);
+                  //docker.execCmd("azure-cli-bot", "node /bot/server.js", null);
+                  //docker.execCmd("azure-cli-bot", "az --help", null);
+                });
+                  
                 break;                
             }
         });
@@ -287,3 +299,76 @@ export function activate(context: vscode.ExtensionContext) {
 // this method is called when your extension is deactivated
 export function deactivate() {
 }
+
+var out: vscode.OutputChannel = vscode.window.createOutputChannel("muka muka");
+
+function logHandler(data: string) {
+  out.append(data);
+}
+
+function closeHandler(id: string) {
+  // remove terminal - in original version of docker
+}
+
+var terminal = null;
+
+function startContainerFromTerminal(id: string, view: boolean, cb) {
+  var name = "azure-cli-bot";
+
+  //if (g_Terminals.hasOwnProperty(name)) {
+  //    // just show the terminal if it was already created for this container
+  //    if (view) g_Terminals[name].show();
+  //} else {
+
+      //var cc :any = g_Config[id];
+      //var params: string = cc.config.run;
+
+      var params: string =  "-i -t --rm --name $default-name -v $workspace:$src -p3978:3978 " + id + " node /bot/server.js";
+
+      // create a new terminal and show it
+      terminal  = vscode.window.createTerminal(name);
+      terminal.show();
+
+      // check if we already have this process isRunning
+
+      docker.ps(false, function(result) {
+          var exists: boolean = false;
+
+          if (result) {
+              for (var i = 0; i < result.rows.length; i++) {
+                  if (result.rows[i].names == name) {
+                      exists = true;
+                  }
+              }
+          }
+
+          if (exists) {
+              terminal.sendText('docker attach ' + name, true);
+              docker.attach(name, false, function(result) {
+                  cb();
+              });
+          } else {
+              var src = '/src';
+
+              //if (g_Config[id].config.src) {
+              //    src = g_Config[id].config.src;
+              //}
+
+              params = params.replace('$default-name', name);
+              params = params.replace('$workspace', vscode.workspace.rootPath);
+              params = params.replace('$src', src);
+
+
+              terminal.sendText('docker run ' + params, true);
+
+              setTimeout(function() {
+                  docker.attach(name, false, function(result) {
+                      cb();
+                  });
+              }, 3000)
+          }
+      });
+  //}
+
+}
+
