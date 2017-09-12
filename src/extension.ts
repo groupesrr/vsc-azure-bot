@@ -315,7 +315,9 @@ function logHandler(data: string) {
       var activity: any = JSON.parse(part);
 
       html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity.data, 1, function(r) {
-        vscode.window.showInformationMessage(JSON.stringify(r));
+        //vscode.window.showInformationMessage(JSON.stringify(r));
+        terminal.sendText(JSON.stringify(r), true);
+        
       });
       
       collect = "";
