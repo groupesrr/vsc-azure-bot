@@ -23,11 +23,244 @@ export function activate(context: vscode.ExtensionContext) {
         var items:string[] = [];
         
         items.push('IoT Hub Bot');
+        items.push('Azure CLI - Docker');
         
         vscode.window.showQuickPick(items).then( selected => {
             switch (selected) {
             case 'IoT Hub Bot':
                 html.createPreview('iot-hub-bot', "IoT Hub Bot", "s=ojvqESHqegc.cwA.hS0.ZWEaYONOGWVxP_lRkYjvw41FsBcQjutSNXNfjn0n9hU", 2);
+                break;                
+            case 'Azure CLI - Docker':
+                // XXX - this must run in a different way
+                // XXX - docker shall be started here, and createPreview from inside
+                // XXX - but for now, let's just display message
+                html.createPreview('azure-cli', "Azure CLI", "", 2);
+
+                var activity =
+                
+                  {
+                    type: "message",
+                    "attachments":
+                    [
+                      {
+                        "contentType": "application/vnd.microsoft.card.adaptive",
+                        "content": {
+                          "type": "AdaptiveCard",
+                          "body": [
+                            {
+                              "type": "Container",
+                              "items": [
+                                {
+                                  "type": "TextBlock",
+                                  "text": "az",
+                                  "weight": "bolder",
+                                  "size": "medium"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ColumnSet",
+                              "separation": "string",
+                              "columns": [
+                                {
+                                  "type": "Column",
+                                  "size": 1,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "color": "accent",
+                                      "textweight": "bolder",
+                                      "text": "account"
+                                    }
+                                  ],
+                                  "selectAction": {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                      "action": "menu",
+                                      "param": "az account"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Column",
+                                  "size": 2,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "horizontalAlignment": "left",
+                                      "text": "Manage subscriptions.",
+                                      "isSubtle": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ColumnSet",
+                              "separation": "none",
+                              "columns": [
+                                {
+                                  "type": "Column",
+                                  "size": 1,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "color": "accent",
+                                      "textweight": "bolder",
+                                      "text": "acr"
+                                    }
+                                  ],
+                                  "selectAction": {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                      "action": "menu",
+                                      "param": "az acr"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Column",
+                                  "size": 2,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "horizontalAlignment": "left",
+                                      "text": "Manage Azure Container Registries.",
+                                      "isSubtle": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ColumnSet",
+                              "separation": "none",
+                              "columns": [
+                                {
+                                  "type": "Column",
+                                  "size": 1,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "color": "accent",
+                                      "textweight": "bolder",
+                                      "text": "acs"
+                                    }
+                                  ],
+                                  "selectAction": {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                      "action": "menu",
+                                      "param": "az acs"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Column",
+                                  "size": 2,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "horizontalAlignment": "left",
+                                      "text": "Manage Azure Container Services.",
+                                      "isSubtle": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ColumnSet",
+                              "separation": "none",
+                              "columns": [
+                                {
+                                  "type": "Column",
+                                  "size": 1,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "color": "accent",
+                                      "textweight": "bolder",
+                                      "text": "ad"
+                                    }
+                                  ],
+                                  "selectAction": {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                      "action": "menu",
+                                      "param": "az ad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Column",
+                                  "size": 2,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "horizontalAlignment": "left",
+                                      "text": "Synchronize on-premises directories and manage Azure Active Directory",
+                                      "isSubtle": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ColumnSet",
+                              "separation": "none",
+                              "columns": [
+                                {
+                                  "type": "Column",
+                                  "size": 1,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "color": "accent",
+                                      "textweight": "bolder",
+                                      "text": "appservice"
+                                    }
+                                  ],
+                                  "selectAction": {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                      "action": "menu",
+                                      "param": "az appservice"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Column",
+                                  "size": 2,
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "size": "medium",
+                                      "horizontalAlignment": "left",
+                                      "text": "Manage your App Service plans.",
+                                      "isSubtle": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+              
+                };
+
+                html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity, 1) 
                 break;                
             }
         });

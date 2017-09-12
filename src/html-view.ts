@@ -99,7 +99,27 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
         this.preview('xxx://internal/' + type, this.m_CurrentDocument, title, panel, false);
     }
 
+    /**
+     * View AdaptiveCard as HTML
+     * @param type 
+     * @param title 
+     * @param action
+     * @param panel 
+     */
+    public createAdaptiveCardPreview(type: string, title: string, action: object, panel: number = 1) {
 
+        this.documentStart(title, type, true);
+
+        // XXX - just write JSON to the FS so it can be 
+        fs.writeFile(this.m_ExtensionPath + "/html/card.js", "var ACTIVITY = " + JSON.stringify(action) + ";");
+
+        this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/single.html\" frameBorder=\"0\" />");
+
+        this.documentEnd();
+
+        this.preview('xxx://internal/' + type, this.m_CurrentDocument, title, panel, false);
+    }
+        
 
     /**
      * Start HTML Document
