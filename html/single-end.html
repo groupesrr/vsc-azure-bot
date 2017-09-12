@@ -27,11 +27,7 @@
         }
   
         var href = handlerHref; 
-        // document will be prepended to the file
-        //href = href.replace('xdocumentx', documentId);
-        //href = href.replace('xelementx', element);
-        //href = href.replace('xeventx', event);
-        //href = href.replace('xparamx', param);
+        href = href.replace('xresponsex', encodeURIComponent(JSON.stringify(param)));
         document.getElementById("event_handler_a").setAttribute('href', href);
         document.getElementById("event_handler_a").click();
       }
@@ -45,6 +41,6 @@
       }, document.getElementById('BotChatGoesHere'));
     </script>
 
-    <a href='command:extension.htmlCardEvent?%5B%22xdocumentx%22,%22xelementx%22,%22xeventx%22,%22xparamx%22%5D' id='event_handler_a' ></a>
+    <a href='command:extension.htmlCardEvent?xresponsex' id='event_handler_a' ></a>
   </body>
 </html>

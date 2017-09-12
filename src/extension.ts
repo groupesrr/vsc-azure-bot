@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
         //  2) element id
         //  3) event type
         //  4) event param
-        html.handleEvent(p[0], p[1], p[2], p[3]);
+        html.handleEvent(p[0]);
       });
     }
 
@@ -270,7 +270,9 @@ export function activate(context: vscode.ExtensionContext) {
               
                 };
 
-                html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity, 1) 
+                html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity, 1, function(r) {
+                  vscode.window.showInformationMessage(JSON.stringify(r));
+                }) 
                 break;                
             }
         });

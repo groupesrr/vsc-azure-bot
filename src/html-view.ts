@@ -106,8 +106,9 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
      * @param action
      * @param panel 
      */
-    public createAdaptiveCardPreview(type: string, title: string, action: object, panel: number = 1) {
+    public createAdaptiveCardPreview(type: string, title: string, action: object, panel: number = 1, cb) {
 
+        this.cb = cb;
         var script = fs.readFileSync(this.m_ExtensionPath + "/html/botchat.js", "utf8");
         var css1 = fs.readFileSync(this.m_ExtensionPath + "/html/botchat.css", "utf8");
         var css2 = fs.readFileSync(this.m_ExtensionPath + "/html/botchat-fullwindow.css", "utf8");
@@ -120,15 +121,7 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
         this.m_CurrentDocument = start + "\r\n<script>\r\n" + script + "\r\n\r\n var ACTIVITY = " + JSON.stringify(action) + ";\r\n </script>\r\n" +
                                          "<style>\r\n" + css1 + "\r\n" + css2 + "\r\n</style>\r\n" + end;
         
-        //this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/single.html\" frameBorder=\"0\" />");
-
-
-        //var link = encodeURI('command:extension.htmlCardEvent?' + JSON.stringify(['xdocumentx', 'xelementx', 'xeventx', 'xparamx']));
-        //this.m_GlobalLinks += "<a href='" + link + "' id='event_handler_a' ></a>";
-        
-        //this.documentEnd();
-
-        fs.writeFileSync(this.m_ExtensionPath + "/html/updated.html", this.m_CurrentDocument);
+        //fs.writeFileSync(this.m_ExtensionPath + "/html/updated.html", this.m_CurrentDocument);
 
         this.preview('xxx://internal/' + type, this.m_CurrentDocument, title, panel, false);
     }
@@ -182,22 +175,8 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
      * @param eventType 
      * @param eventParam 
      */
-    public handleEvent(tab: string, element: string, eventType: string, eventParam: string) {
-        console.log("Event: " + tab + " " + element + " " + eventType + " " + eventParam);
-
-        if (eventType == 'DoubleClick') {
-            this.executeCommand(tab, element, 'onDefault');
-            this.executeCommand(tab, element, 'onAltSelect');
-        } else if (eventType == 'RightClick') {
-            this.executeCommand(tab, element, 'onOptions');
-            this.executeCommand(tab, element, 'onSelect');
-        } else if (eventType == 'KeyDown') {
-            if (eventParam == 'Delete') {
-                this.executeCommand(tab, element, 'onDelete');
-            } else if (eventParam == 'Escape') {
-                this.executeCommand(tab, element, 'onBack');
-            }
-        }
+    public handleEvent(r: string) {
+        if (this.cb) this.cb(r);
     }
 
     /**
@@ -254,6 +233,8 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
     private m_NextBtn: number = 0;
     private m_PanelData: object[] = [];
 
+    // for now just single callback
+    private cb = null;    
 }
 
 var provider = new HtmlView();
