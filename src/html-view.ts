@@ -117,7 +117,8 @@ export class HtmlView implements vscode.TextDocumentContentProvider {
         
         
 
-        this.m_CurrentDocument = start + "<script>" + script + "\r\n\r\n var ACTIVITY = " + JSON.stringify(action) + "; </script>" + end;
+        this.m_CurrentDocument = start + "\r\n<script>\r\n" + script + "\r\n\r\n var ACTIVITY = " + JSON.stringify(action) + ";\r\n </script>\r\n" +
+                                         "<style>\r\n" + css1 + "\r\n" + css2 + "\r\n</style>\r\n" + end;
         
         //this.write("<iframe id='chat' src=\"" + this.m_ExtensionPath + "/html/single.html\" frameBorder=\"0\" />");
 
