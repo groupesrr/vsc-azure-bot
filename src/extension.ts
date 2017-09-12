@@ -280,9 +280,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 startContainerFromTerminal("dockiot/azure-bot-dev", true, function(result) {
 
-                  docker.execCmd("azure-cli-bot", "hello", null);
-                  //docker.execCmd("azure-cli-bot", "node /bot/server.js", null);
-                  //docker.execCmd("azure-cli-bot", "az --help", null);
+                  terminal.sendText("azure --help");
                 });
                   
                 break;                
@@ -300,12 +298,9 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
-var out: vscode.OutputChannel = vscode.window.createOutputChannel("muka muka");
-
 var collect: string = "";
-function logHandler(data: string) {
-  out.append(data);
 
+function logHandler(data: string) {
   collect += data;
 
   var parts: string[] = collect.split('\n');
@@ -348,7 +343,7 @@ function startContainerFromTerminal(id: string, view: boolean, cb) {
 
       // create a new terminal and show it
       terminal  = vscode.window.createTerminal(name);
-      terminal.show();
+      //terminal.show();
 
       // check if we already have this process isRunning
 
@@ -365,10 +360,12 @@ function startContainerFromTerminal(id: string, view: boolean, cb) {
 
           if (exists) {
               terminal.sendText('docker attach ' + name, true);
-              docker.attach(name, false, function(result) {
-                  cb();
-              });
-          } else {
+              setTimeout(function() {
+                docker.attach(name, false, function(result) {
+                    cb();
+                });
+            }, 3000)
+        } else {
               var src = '/src';
 
               //if (g_Config[id].config.src) {
