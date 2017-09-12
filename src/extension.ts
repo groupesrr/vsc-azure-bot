@@ -280,7 +280,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 startContainerFromTerminal("dockiot/azure-bot-dev", true, function(result) {
 
-                  //docker.execCmd("azure-cli-bot", "ls -al", null);
+                  docker.execCmd("azure-cli-bot", "hello", null);
                   //docker.execCmd("azure-cli-bot", "node /bot/server.js", null);
                   //docker.execCmd("azure-cli-bot", "az --help", null);
                 });
@@ -302,8 +302,27 @@ export function deactivate() {
 
 var out: vscode.OutputChannel = vscode.window.createOutputChannel("muka muka");
 
+var collect: string = "";
 function logHandler(data: string) {
   out.append(data);
+
+  collect += data;
+
+  var parts: string[] = collect.split('\n');
+
+  for (var part of parts) {
+    try {
+      var activity: any = JSON.parse(part);
+
+      html.createAdaptiveCardPreview("azure-cli", "Azure CLI", activity.data, 1, function(r) {
+        vscode.window.showInformationMessage(JSON.stringify(r));
+      });
+      
+      collect = "";
+      return;
+        
+    } catch (e) {}
+  }
 }
 
 function closeHandler(id: string) {
@@ -323,7 +342,7 @@ function startContainerFromTerminal(id: string, view: boolean, cb) {
       //var cc :any = g_Config[id];
       //var params: string = cc.config.run;
 
-      var params: string =  "-i -t --rm --name $default-name -v $workspace:$src -p3978:3978 " + id + " node /bot/server.js";
+      var params: string =  "-i -t --rm --name $default-name -v $workspace:$src " + id + " node /bot/server-local.js";
 
       // create a new terminal and show it
       terminal  = vscode.window.createTerminal(name);
